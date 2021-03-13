@@ -15,3 +15,6 @@ SHP具有以下特征:<br />
 常规情况下, RDC不会对游戏作出任何实际上的影响, 它更像是一个中转站, 需要您使用其他语言对RDC下达指令, RDC方可正常工作。<br />
 如您擅长使用go语言, 邀请您试用我在之前推出的web框架<a href="https://github.com/Mr-YongXuan/TopEngine">TopEngine</a><br />
 参观我正在制作的数据记录器 <a href="http://www.lcenter.cn">RDC Web</a>
+
+# 如何使用?
+请参考Wiki: <a href="https://github.com/Mr-YongXuan/RDC/wiki">RDC手册</a>
