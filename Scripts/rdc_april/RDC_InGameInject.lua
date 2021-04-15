@@ -103,7 +103,9 @@ RDC.gameInjection[#RDC.gameInjection+1] = [==[
                 isAI = false
             end
             local basename = "Wilde"
-            local ok, e = pcall(_event.place:getCallsign())
+            local ok, e = pcall(function ()
+                _event.place:getCallsign()
+            end)
             if ok then
                 basename = _event.place:getCallsign()
             end
@@ -121,6 +123,12 @@ RDC.gameInjection[#RDC.gameInjection+1] = [==[
         
         --GroupII event rebuild
         elseif RDC.strInTab(_event.id, RDC.sameEvent.groupII) then
+            local ok, e = pcall(function ()
+                _event.initiator:getPlayerName()
+            end)
+    
+            if not ok then return end
+    
             local isAI = true
             if _event.initiator:getPlayerName() then
                 isAI = false
@@ -135,7 +143,7 @@ RDC.gameInjection[#RDC.gameInjection+1] = [==[
                 callsign   = _event.initiator:getCallsign(),
                 coalition  = _event.initiator:getCoalition()
             }
-        
+    
         --shot event rebuild
         elseif _event.id == 1 then
             local isAI = true
@@ -156,11 +164,17 @@ RDC.gameInjection[#RDC.gameInjection+1] = [==[
             }
         
         --hit event rebuild
-        elseif _event.id == 2 then
+        elseif _event.id == 2 or _event.id == 29 then
             if _event.time - RDC.hitStamp > 0.5 then
                 RDC.hitStamp = _event.time
                 local isAI = true
                 local targetIsAI = true
+                local ok, e = pcall(function ()
+                    _event.initiator:getPlayerName()
+                end)
+    
+                if not ok then return end
+                
                 if _event.initiator:getPlayerName() then
                     isAI = false
                 end
@@ -210,15 +224,6 @@ RDC.gameInjection[#RDC.gameInjection+1] = [==[
     
     function sendGlobalMessageBox(text, displayTime, clearview)
         trigger.action.outText(text, displayTime, clearview)
-    end
-    
-    
-    function doInsideTest(program)
-        local func, err = loadstring(program)
-        if func then
-            return true, func()
-        end
-        return false, err
     end
     
     

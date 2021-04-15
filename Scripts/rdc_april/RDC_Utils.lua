@@ -43,7 +43,7 @@ end
 
 
 function RDC.postData(data)
-    local request_body = 'data=' .. data
+    local request_body = data
     local response_body = {}
        
     RDC.http.request{

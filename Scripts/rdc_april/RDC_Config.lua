@@ -8,6 +8,7 @@ RDC = RDC or {}
     Created_at: 2021-02-23
     License: GPL v3
     Sequence: 2
+    Update: 接口一致性治理工作
 ]]--
 package.path = package.path..";.\\LuaSocket\\?.lua"
 package.cpath = package.cpath..";.\\LuaSocket\\?.dll"
@@ -17,10 +18,10 @@ package.cpath = package.cpath..";.\\LuaCjson\\?.dll"
 
 RDC.gameInjection = {}
 RDC.serverStatusMachine = "initial"
-RDC.PUSH_URL = "http://127.0.0.1/rdc/api/v1/dataPort"
+RDC.PUSH_URL = "http://api.lcenter.cn/rdc/api/v1/COM1"
 
 RDC.HTTP_CONFIG = {
-    LISTEN_ADDR = "127.0.0.1",
+    LISTEN_ADDR = "0.0.0.0",
     LISTEN_PORT = 8099,
     SOCKET_BACK = 1024,
     COMMON_SYBO = "\r\n\r\n"
