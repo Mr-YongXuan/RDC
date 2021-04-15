@@ -1,0 +1,7 @@
+server:
+  port: 80
+
+knife4j:
+  enable: true
+  setting:
+    enableFooter: false
