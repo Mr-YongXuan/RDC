@@ -21,7 +21,7 @@ RDC.SHP.HandleFuns["Root"] = function (request, response)
                   <hr>
                   OpenSource: <a href="https://github.com/Mr-YongXuan/RDC">Click there, just slowly push star button and say wow!~ [thx~ XD]</a>
                   <br />
-                  如你所见, 我们打通了DCS围墙!
+                  Welcome to RDC!
                 </div>
               </body>
             </html>
