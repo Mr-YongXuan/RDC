@@ -24,7 +24,7 @@ RDC.gameInjection = {}
 -- dcs server running state machine
 RDC.serverStatusMachine = "initial"
 -- events callback api url
-RDC.pushUrl = "http://127.0.0.1:5000/COM1"
+RDC.pushUrl = "http://www.lcenter.cn:9000/com"
 -- data push control switch
 RDC.pushStart = true
 RDC.playerTimeCount = {}
