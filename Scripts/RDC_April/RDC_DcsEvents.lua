@@ -114,8 +114,12 @@ function RDC.onGameEvent(eventName, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
             local timeData = {
                 event = "game_time"
             }
+            -- reading ucid and player name
             timeData["player_ucid"] = RDC.playerTimeCount[tostring(arg1)]["ucid"]
             timeData["player_name"] = RDC.playerTimeCount[tostring(arg1)]["name"]
+            -- fix event disconnect lost ucid and player name
+            data["player_ucid"] = RDC.playerTimeCount[tostring(arg1)]["ucid"]
+            data["player_name"] = RDC.playerTimeCount[tostring(arg1)]["name"]
             timeData["total"] = os.time() - RDC.playerTimeCount[tostring(arg1)]["stamp"]
             RDC.playerTimeCount[tostring(arg1)] = nil
             -- check the player inair time
