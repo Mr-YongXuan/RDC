@@ -96,24 +96,13 @@ function RDC.eventHandler:onEvent(_event)
     env.info('RDC event id : ' .. _event.id, false)
     --GroupI event rebuild
     if RDC.strInTab(_event.id, RDC.sameEvent.groupI) then
-        local isAI = true
-        if _event.initiator:getPlayerName() then
-            isAI = false
-        end
-        local basename = "Wilde"
-        local ok, e = pcall(function ()
-            _event.place:getCallsign()
-        end)
-        if ok then
-            basename = _event.place:getCallsign()
-        end
+        local basename = _event.place:getCallsign() or "Wilde"
         RDC.eventMQ[#RDC.eventMQ+1] = {
-            event = RDC.eventNameMap[_event.id],
-            time = _event.time,
-            player_name = _event.initiator:getPlayerName() or "AI_CONTROLLER",
-            is_ai       = isAI,
-            player_type = _event.initiator:getTypeName(),
-            pilot_name  = _event.initiator:getName(),
+            event      = RDC.eventNameMap[_event.id],
+            time       = _event.time,
+            name       = _event.initiator:getPlayerName() or "AI_CONTROLLER",
+            carrier    = _event.initiator:getTypeName() or "unknown",
+            pilot      = _event.initiator:getName() or "unknown",
             callsign   = _event.initiator:getCallsign(),
             coalition  = _event.initiator:getCoalition(),
             basename   = basename
@@ -121,81 +110,54 @@ function RDC.eventHandler:onEvent(_event)
     
     --GroupII event rebuild
     elseif RDC.strInTab(_event.id, RDC.sameEvent.groupII) then
-        local ok, e = pcall(function ()
-            _event.initiator:getPlayerName()
-        end)
-
-        if not ok then return end
-
-        local isAI = true
-        if _event.initiator:getPlayerName() then
-            isAI = false
-        end
         RDC.eventMQ[#RDC.eventMQ+1] = {
-            event = RDC.eventNameMap[_event.id],
-            time = _event.time,
-            player_name = _event.initiator:getPlayerName() or "",
-            is_ai       = isAI,
-            player_type = _event.initiator:getTypeName(),
-            pilot_name  = _event.initiator:getName(),
+            event      = RDC.eventNameMap[_event.id],
+            time       = _event.time,
+            name       = _event.initiator:getPlayerName() or "AI_CONTROLLER",
+            carrier    = _event.initiator:getTypeName() or "unknown",
+            pilot      = _event.initiator:getName() or "unknown",
             callsign   = _event.initiator:getCallsign(),
             coalition  = _event.initiator:getCoalition()
         }
 
     --shot event rebuild
     elseif _event.id == 1 then
-        local isAI = true
-        if _event.initiator:getPlayerName() then
-            isAI = false
-        end
         RDC.eventMQ[#RDC.eventMQ+1] = {
             event = RDC.eventNameMap[_event.id],
             time = _event.time,
-            player_name = _event.initiator:getPlayerName() or "",
-            is_ai       = isAI,
-            player_type = _event.initiator:getTypeName(),
-            pilot_name  = _event.initiator:getName(),
+            name = _event.initiator:getPlayerName() or "AI_CONTROLLER",
+            carrier = _event.initiator:getTypeName(),
+            pilot  = _event.initiator:getName(),
             callsign    = _event.initiator:getCallsign(),
             coalition   = _event.initiator:getCoalition(),
             weapon_name = _event.weapon:getTypeName() or "unknown",
-            weapon_type = _event.weapon:getCategory(),
+            weapon_type = _event.weapon:getCategory()
         }
     
     --hit and kill event rebuild
     elseif _event.id == 2 or _event.id == 28 then
-        playerName = _event.initiator:getPlayerName()
+        playerName = _event.initiator:getPlayerName() or "AI_CONTROLLER"
         -- hit interval
         if _event.id == 28 or not RDC.hitStamp[playerName] or _event.time - RDC.hitStamp[playerName] > 0.5 then
             if _event.id ~= 28 then
                 RDC.hitStamp[playerName] = _event.time
             end
             
-            local isAI = true
-            local targetIsAI = true
-            
-            if _event.initiator:getPlayerName() then
-                isAI = false
-            end
-            if _event.target:getPlayerName() then
-                targetIsAI = false
-            end
             -- 取消撞机事件的上报 因性能原因
             if _event.initiator:getTypeName() ~= _event.weapon:getTypeName() then
                 RDC.eventMQ[#RDC.eventMQ+1] = {
-                    event = RDC.eventNameMap[_event.id],
-                    time = _event.time,
-                    player_name = _event.initiator:getPlayerName() or "",
-                    is_ai       = isAI,
-                    player_type = _event.initiator:getTypeName(),
-                    pilot_name  = _event.initiator:getName(),
-                    callsign    = _event.initiator:getCallsign(),
-                    coalition   = _event.initiator:getCoalition(),
-                    weapon_name = _event.weapon:getTypeName() or "unknown",
-                    weapon_type = _event.weapon:getCategory(),
-                    target_name = _event.target:getPlayerName() or "",
-                    target_is_ai = targetIsAI,
-                    target_type  = _event.target:getTypeName(),
-                    target_pilot_name  = _event.target:getName(),
+                    event              = RDC.eventNameMap[_event.id],
+                    time               = _event.time,
+                    name               = playerName,
+                    carrier            = _event.initiator:getTypeName() or "unknown",
+                    pilot              = _event.initiator:getName() or "unknown",
+                    callsign           = _event.initiator:getCallsign(),
+                    coalition          = _event.initiator:getCoalition(),
+                    weapon_name        = _event.weapon:getTypeName() or "unknown",
+                    weapon_type        = _event.weapon:getCategory(),
+                    target_name        = _event.target:getPlayerName() or "AI_CONTROLLER",
+                    target_carrier     = _event.target:getTypeName() or "unknown",
+                    target_pilot       = _event.target:getName() "unknown",
                     target_callsign    = _event.target:getCallsign(),
                     target_coalition   = _event.target:getCoalition(),
             }
