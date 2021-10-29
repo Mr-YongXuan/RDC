@@ -1,4 +1,4 @@
-local rdcVersion = "April"
+local rdcVersion = "Bits"
 
 function RdcGameLoading()
     dofile(lfs.writedir() .. 'Scripts/RDC_'  .. rdcVersion .. '/RDC_Config.lua')

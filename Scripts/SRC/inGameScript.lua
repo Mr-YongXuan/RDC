@@ -5,7 +5,7 @@ RDC.sameEvent = {
     groupI = {3, 4},
     groupII = {5, 6, 7, 8, 9, 14, 15, 16, 17, 18, 19, 20, 21}
 }
-RDC.hitStamp = 0
+RDC.hitStamp = {}
 RDC.eventNameMap = {
     [1]  = "shot",
     [2]  = "hit",
@@ -161,17 +161,17 @@ function RDC.eventHandler:onEvent(_event)
             weapon_type = _event.weapon:getCategory(),
         }
     
-    --hit event rebuild
-    elseif _event.id == 2 or _event.id == 29 then
-        if _event.time - RDC.hitStamp > 0.5 then
-            RDC.hitStamp = _event.time
+    --hit and kill event rebuild
+    elseif _event.id == 2 or _event.id == 28 then
+        playerName = _event.initiator:getPlayerName()
+        -- hit interval
+        if _event.id == 28 or not RDC.hitStamp[playerName] or _event.time - RDC.hitStamp[playerName] > 0.5 then
+            if _event.id ~= 28 then
+                RDC.hitStamp[playerName] = _event.time
+            end
+            
             local isAI = true
             local targetIsAI = true
-            local ok, e = pcall(function ()
-                _event.initiator:getPlayerName()
-            end)
-
-            if not ok then return end
             
             if _event.initiator:getPlayerName() then
                 isAI = false
@@ -200,7 +200,7 @@ function RDC.eventHandler:onEvent(_event)
                     target_coalition   = _event.target:getCoalition(),
             }
             end
-        end
+        end 
     end
 end
 
