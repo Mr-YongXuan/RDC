@@ -1,5 +1,5 @@
 # RDC Bits | Common Ver: RDC v2
-DCS World兔兔小队开源项目, 内建于DCS World的一款轻量数据导出&amp;控制Web服务器，可让开发者使用任意语言调用WebAPI控制DCS World服务器。
+RDC(Rabbit DCS Cloud)是DCS World兔兔小队开源项目, 内建于DCS World的一款轻量数据导出&amp;控制Web服务器，可让开发者使用任意语言调用WebAPI控制DCS World服务器。
 
 # SHP
 <strong>Simple HTTP</strong>简单超文本传输协议, 我在DCS中手动编写了一个简单的动态web服务器, 它可以让你主动获取游戏内的任何信息。
