@@ -254,9 +254,9 @@ function RDC.eventHandler:onEvent(_event)
     --shot event rebuild
     elseif _event.id == 1 then
         -- 分析武器类型是否为gun shoot
-        pilotName = _event.initiator:getName()
-        weapon = _event.weapon:getTypeName() or "unknown",
-        weaponSp = RDC.split(weapon, ".")
+        local pilotName = _event.initiator:getName()
+        local weapon = _event.weapon:getTypeName() or "unknown"
+        local weaponSp = RDC.split(weapon, ".")
         if #weaponSp >= 3 then -- gun shoot
             -- counts
             if not RDC.gunsCacheMap[pilotName] then
@@ -279,12 +279,12 @@ function RDC.eventHandler:onEvent(_event)
     
     elseif _event.id == 24 then
         -- 上报机炮shot数量
-        pilotName = _event.initiator:getName()
-        weaponSp = RDC.split(_event.weapon_name, ".")
+        local pilotName = _event.initiator:getName()
+        local weaponSp = RDC.split(_event.weapon_name, ".")
     
     --hit and kill event rebuild
     elseif _event.id == 2 or _event.id == 28 then
-        playerName = _event.initiator:getPlayerName() or ""
+        local playerName = _event.initiator:getPlayerName() or ""
         -- hit interval
         if _event.id == 28 or not RDC.hitStamp[playerName] or _event.time - RDC.hitStamp[playerName] > 0.5 then
             if _event.id ~= 28 then
@@ -316,7 +316,7 @@ end
 
 function getNextEvent()
     if RDC.eventMQ then
-        _event = RDC.eventMQ[1]
+        local _event = RDC.eventMQ[1]
         table.remove(RDC.eventMQ, 1)
         return RDC.TableToStr(_event)
     end
@@ -331,6 +331,25 @@ end
 
 function sendGlobalMessageBox(text, displayTime, clearview)
     trigger.action.outText(text, displayTime, clearview)
+end
+
+
+-- Moose Script Support
+function getTriggerVec2(triggerName)
+    local trZone = ZONE:New( triggerName )
+    return trZone:GetPointVec2()
+end
+
+
+function createStaticWithVec2(staticName, countryId, vecPos, heading)
+    local Spawn = SPAWNSTATIC:NewFromStatic( staticName, countryId )
+    Spawn:SpawnFromPointVec2( vecPos, heading )
+end
+
+
+function createStaticWithPos(staticName, countryId, x, y, heading)
+    local Spawn = SPAWNSTATIC:NewFromStatic( staticName, countryId )
+    Spawn:SpawnFromPointVec2( POINT_VEC2:New( x, y ), heading )
 end
 
 

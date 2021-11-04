@@ -49,7 +49,7 @@ function RDC.postData(data)
     local request_body = data
     local response_body = {}
 
-    local _, code, _ = RDC.http.request{
+    local res, code, _ = RDC.http.request{
         url = RDC.pushUrl,
         method = "POST",
         headers =
@@ -63,6 +63,7 @@ function RDC.postData(data)
     if code ~= 200 then
         -- fuse->fused role check
     end
+    return table.concat(res)
 end
 
 

@@ -78,4 +78,35 @@ RDC.SHP.HandleFuns["PlayerList"] = function (request, response)
   return response
 end
 
+
+-- get vec2 with mission static object
+RDC.SHP.HandleFuns["SendGlobalMessage"] = function (request, response)
+  if request.Method == "POST" then
+    local msg = request.Body
+    local tim = request.Arguments['time']
+    local clv = request.Arguments['clearview']
+    local res, err = net.dostring_in("server", 'sendGlobalMessageBox("' .. msg .. '",' .. tim .. ',' .. clv .. ')')
+    local data = {}
+    if err then
+      data = {
+        code = 0,
+        message = "",
+        data = nil
+      }
+    
+    else
+      data = {
+        code = -1,
+        message = res,
+        data = nil
+      }
+    end
+    
+    response:ReturnJson(data)
+
+  else response.ReturnStatus_405() end
+
+  return response
+end
+
 RDC.info("RDC_Functions.lua loaded!")

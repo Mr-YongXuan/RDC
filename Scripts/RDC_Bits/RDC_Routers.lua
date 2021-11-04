@@ -12,5 +12,6 @@ RDC.SHP.Routers["/"] = RDC.SHP.HandleFuns["Root"]
 -- group by server read only
 RDC.SHP.Routers["/server/status"] = RDC.SHP.HandleFuns["ServerStatus"]
 RDC.SHP.Routers["/server/player_list"] = RDC.SHP.HandleFuns["PlayerList"]
+RDC.SHP.Routers["/server/send_global_message"] = RDC.SHP.HandleFuns["SendGlobalMessage"]
 
 RDC.info("RDC_Routers.lua loaded!")

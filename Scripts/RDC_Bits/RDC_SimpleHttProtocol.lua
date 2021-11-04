@@ -74,9 +74,9 @@ function RDC.SHP.HttpCallbackAcceptConn()
               local _tmpBuf = RDC.split(buf, "?")
               request.Resource = _tmpBuf[1]
               if #_tmpBuf == 2 then
-                for _, item in pairs(_tmpBuf[2], "&") do
+                for _, item in pairs(RDC.split(_tmpBuf[2], "&")) do
                   local _tmpArgs = RDC.split(item, "=")
-                  if _tmpArgs == 2 then
+                  if #_tmpArgs == 2 then
                     request.Arguments[_tmpArgs[1]] = _tmpArgs[2]
                   end
                 end
@@ -126,7 +126,7 @@ function RDC.SHP.HttpCallbackAcceptConn()
             end
         end
         if buf then
-          request.Body = buf 
+          request.Body = buf
         end
 
         RDC.SHP.HttpRouter(request)
